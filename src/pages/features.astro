@@ -1,0 +1,87 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const logRecordExample = `@LogRecord(
+    success = "更新成功了订单{ORDER{#orderId}},更新内容为...",
+    fail = "更新失败了订单{ORDER{#orderId}},更新内容为...",
+    type = LogRecordType.ORDER, 
+    bizNo = "{{#order.orderNo}}",
+    successCondition = "{{#result.code == 200}}"
+)
+public Result<Boolean> updateOrder(Long orderId, Order order) {
+    // 业务逻辑
+    Result<Boolean> result = new Result<>(200, "成功", true);
+    LogRecordContext.putVariable("result", result);
+    return result;
+}`;
+
+const multipleLogsExample = `@LogRecord(
+    subType = "管理员视图", 
+    extra = "{{#order.toString()}}",
+    success = "{{#order.purchaseName}}下了一个订单,购买商品「{{#order.productName}}」,下单结果:{{#_ret}}",
+    type = LogRecordType.ORDER, 
+    bizNo = "{{#order.orderNo}}"
+)
+@LogRecord(
+    subType = "用户视图",
+    success = "{{#order.purchaseName}}下了一个订单,购买商品「{{#order.productName}}」,下单结果:{{#_ret}}",
+    type = LogRecordType.USER, 
+    bizNo = "{{#order.orderNo}}"
+)
+public boolean createOrders(Order order) {
+    log.info("【创建订单】orderNo={}", order.getOrderNo());
+    return true;
+}`;
+---
+
+<Layout title="特性 - MZT Biz Log">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-4xl font-bold text-gray-900 mb-8">MZT Biz Log 主要特性</h1>
+    
+    <div class="space-y-12">
+      <!-- 基础功能 -->
+      <div class="bg-white rounded-lg shadow-sm p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">基础日志记录功能</h2>
+        <div class="prose max-w-none">
+          <p class="text-gray-600">
+            MZT Biz Log 是一个基于注解的强大操作日志组件，专为Spring Boot应用设计。
+            它解决了日志记录的基本问题：「谁」在「什么时间」对「什么」做了「什么事」。
+          </p>
+          
+          <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-4">基础使用示例</h3>
+          <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto"><code>{logRecordExample}</code></pre>
+        </div>
+      </div>
+
+      <!-- 核心特性 -->
+      <div class="bg-white rounded-lg shadow-sm p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">核心特性</h2>
+        <div class="prose max-w-none">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <h3 class="text-xl font-semibold mb-4">基础功能</h3>
+              <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                <li>普通日志记录：支持基本的操作日志记录，包含操作人、操作时间、操作内容等信息</li>
+                <li>失败日志记录：支持记录方法执行失败时的异常信息</li>
+                <li>日志分类：支持通过type和subType对日志进行分类管理</li>
+                <li>额外信息记录：支持记录操作的详细信息或额外数据</li>
+                <li>自定义操作人：支持灵活配置操作人获取方式</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 class="text-xl font-semibold mb-4">高级功能</h3>
+              <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                <li>对象差异比较：支持自动记录对象字段的变化</li>
+                <li>条件日志记录：支持基于条件表达式的日志记录</li>
+                <li>事务支持：可选的业务事务集成</li>
+                <li>性能监控：内置性能监控功能</li>
+                <li>多日志记录：支持单个方法记录多条日志</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

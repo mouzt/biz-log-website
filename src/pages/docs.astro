@@ -1,0 +1,423 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const installationCode = `<dependency>
+    <groupId>io.github.mouzt</groupId>
+    <artifactId>bizlog-sdk</artifactId>
+    <version>3.0.6</version>
+</dependency>`;
+
+const basicUsageCode = `@EnableLogRecord(tenant = "com.mzt.test")
+public class Main {
+    public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
+    }
+}
+
+@Service
+public class UserService {
+    @LogRecord(
+        success = "创建了用户{{#user.username}}",
+        type = LogRecordType.USER,
+        bizNo = "{{#user.id}}"
+    )
+    public User createUser(User user) {
+        // 业务逻辑
+        return user;
+    }
+}`;
+
+const transactionCode = `@EnableLogRecord(tenant = "com.mzt.test", joinTransaction = true)
+@EnableTransactionManagement(order = 0)
+public class Main {
+    public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
+    }
+}`;
+
+const operatorCode = `@LogRecord(
+    operator = "{{#currentUser}}",
+    success = "{{#order.purchaseName}} 创建了一个订单，商品为 {{#order.productName}}",
+    type = LogRecordType.ORDER,
+    bizNo = "{{#order.orderNo}}"
+)
+public boolean createOrder(Order order, String currentUser) {
+    return true;
+}`;
+
+const operatorServiceCode = `@Service
+public class DefaultOperatorGetServiceImpl implements IOperatorGetService {
+    @Override
+    public OperatorDO getUser() {
+        return Optional.of(OrgUserUtils.getCurrentUser())
+                .map(a -> new OperatorDO(a.getMisId()))
+                .orElseThrow(() -> new IllegalArgumentException("用户为空"));
+    }
+}`;
+
+const customFunctionCode = `@LogRecord(
+    success = "更新了订单 {ORDER{#orderId}}，内容为：...",
+    type = LogRecordType.ORDER,
+    bizNo = "{{#order.orderNo}}"
+)
+public boolean update(Long orderId, Order order) {
+    return false;
+}`;
+
+const parseFunctionCode = `@Component
+public class OrderParseFunction implements IParseFunction {
+    @Override
+    public String functionName() {
+        return "ORDER";
+    }
+    
+    @Override
+    public String apply(Object value) {
+        // 将订单ID转换为可读格式
+        return "订单-" + value;
+    }
+}`;
+
+const conditionalCode = `@LogRecord(
+    type = LogRecordType.CUSTOM_ATTRIBUTE,
+    bizNo = "{{#businessLineId}}",
+    success = "{{#disable ? '停用' : '启用'}}了自定义属性 {ATTRIBUTE{#attributeId}}"
+)
+public CustomAttributeVO toggleAttribute(Long businessLineId, Long attributeId, boolean disable) {
+    return customAttributeService.toggle(businessLineId, attributeId, disable);
+}`;
+
+const contextVariablesCode = `@LogRecord(
+    success = "{{#order.purchaseName}} 创建了订单，商品为「{{#order.productName}}」，内部变量：「{{#innerOrder.productName}}」，下单结果：{{#_ret}}",
+    type = LogRecordType.ORDER,
+    bizNo = "{{#order.orderNo}}"
+)
+public boolean createOrder(Order order) {
+    Order innerOrder = new Order();
+    innerOrder.setProductName("内部测试");
+    LogRecordContext.putVariable("innerOrder", innerOrder);
+    return true;
+}`;
+
+const diffListFunctionCode = `@Component
+public class DiffListParseFunction implements IParseFunction {
+    @Override
+    public String functionName() {
+        return "DIFF_LIST";
+    }
+    
+    @Override
+    public String apply(String value) {
+        List<String> oldList = (List<String>) LogRecordContext.getVariable("oldList");
+        List<String> newList = (List<String>) LogRecordContext.getVariable("newList");
+        // 比较并生成差异文本
+        return diffText;
+    }
+}`;
+
+const conditionalLoggingCode = `@LogRecord(
+    success = "更新了订单 ORDER{#orderId}，内容为：...",
+    type = LogRecordType.ORDER,
+    bizNo = "{{#order.orderNo}}",
+    condition = "{{#condition == null}}"
+)
+public boolean testCondition(Long orderId, Order order, String condition) {
+    return false;
+}`;
+
+const objectDiffCode = `@Data
+@DiffLogAllFields
+public class User {
+    private Long id;
+    
+    @DiffLogField(name = "姓名")
+    private String name;
+    
+    @DIffLogIgnore
+    private Integer age;
+    
+    @DiffLogField(name = "性别", function = "SEX")
+    private String sex;
+}`;
+
+const performanceMonitoringCode = `logging:
+  level:
+    com.mzt.logapi.service.impl: debug
+
+# 输出示例：
+# ---------------------------------------------
+# ns         %     任务名称
+# ---------------------------------------------
+# 000111278  003%  执行前
+# 003277960  097%  执行后`;
+
+const successConditionsCode = `@LogRecord(
+    success = "成功更新了订单 {ORDER{#orderId}}",
+    fail = "更新订单 {ORDER{#orderId}} 失败",
+    type = LogRecordType.ORDER,
+    bizNo = "{{#order.orderNo}}",
+    successCondition = "{{#result.code == 200}}"
+)
+public Result<Boolean> testResultOnSuccess(Long orderId, Order order) {
+    Result<Boolean> result = new Result<>(200, "成功", true);
+    LogRecordContext.putVariable("result", result);
+    return result;
+}`;
+
+const multipleLogsCode = `@LogRecord(
+    subType = "管理员视图",
+    success = "{{#order.purchaseName}} 创建了订单，商品为「{{#order.productName}}」，下单结果：{{#_ret}}",
+    type = LogRecordType.ORDER,
+    bizNo = "{{#order.orderNo}}"
+)
+@LogRecord(
+    subType = "用户视图",
+    success = "{{#order.purchaseName}} 创建了订单，商品为「{{#order.productName}}」，下单结果：{{#_ret}}",
+    type = LogRecordType.USER,
+    bizNo = "{{#order.orderNo}}"
+)
+public boolean createOrders(Order order) {
+    log.info("【创建订单】orderNo={}", order.getOrderNo());
+    return true;
+}`;
+
+const objectComparisonCode = `mzt:
+  log:
+    record:
+      useEqualsMethod: java.time.LocalDate,java.time.Instant`;
+---
+
+<Layout title="文档 - MZT Biz Log">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+      <!-- 侧边栏 -->
+      <div class="hidden lg:block lg:col-span-3">
+        <nav class="sticky top-4 space-y-4">
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h2 class="text-lg font-medium text-gray-900 mb-4">文档</h2>
+            <ul class="space-y-2">
+              <li>
+                <a href="#getting-started" class="text-gray-600 hover:text-gray-900">开始使用</a>
+              </li>
+              <li>
+                <a href="#installation" class="text-gray-600 hover:text-gray-900">安装</a>
+              </li>
+              <li>
+                <a href="#basic-usage" class="text-gray-600 hover:text-gray-900">基本用法</a>
+              </li>
+              <li>
+                <a href="#operator-specification" class="text-gray-600 hover:text-gray-900">指定操作人</a>
+              </li>
+              <li>
+                <a href="#log-text-customization" class="text-gray-600 hover:text-gray-900">日志文本自定义</a>
+              </li>
+              <li>
+                <a href="#conditional-expressions" class="text-gray-600 hover:text-gray-900">使用条件表达式</a>
+              </li>
+              <li>
+                <a href="#context-variables" class="text-gray-600 hover:text-gray-900">使用上下文变量</a>
+              </li>
+              <li>
+                <a href="#function-context" class="text-gray-600 hover:text-gray-900">在函数中使用上下文</a>
+              </li>
+              <li>
+                <a href="#conditional-logging" class="text-gray-600 hover:text-gray-900">条件日志记录</a>
+              </li>
+              <li>
+                <a href="#object-diff" class="text-gray-600 hover:text-gray-900">对象差异功能</a>
+              </li>
+              <li>
+                <a href="#performance-monitoring" class="text-gray-600 hover:text-gray-900">性能监控</a>
+              </li>
+              <li>
+                <a href="#success-conditions" class="text-gray-600 hover:text-gray-900">成功条件</a>
+              </li>
+              <li>
+                <a href="#transaction-support" class="text-gray-600 hover:text-gray-900">事务支持</a>
+              </li>
+              <li>
+                <a href="#multiple-logs" class="text-gray-600 hover:text-gray-900">多日志记录</a>
+              </li>
+              <li>
+                <a href="#object-comparison" class="text-gray-600 hover:text-gray-900">对象比较</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+
+      <!-- 主要内容 -->
+      <div class="lg:col-span-9">
+        <div class="bg-white rounded-lg shadow-sm">
+          <div class="px-8 py-6">
+            <h1 class="text-3xl font-bold text-gray-900">文档</h1>
+            
+            <section id="getting-started" class="mt-8">
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">开始使用</h2>
+              <p class="text-gray-600">
+                MZT Biz Log 是一个 Spring Boot 操作日志组件，帮助你记录谁在什么时候对什么做了什么操作。
+                它支持变量、自定义函数，并提供全面的日志记录功能。
+              </p>
+            </section>
+
+            <section id="installation" class="mt-8">
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">安装</h2>
+              <p class="text-gray-600 mb-4">在你的 pom.xml 中添加以下依赖：</p>
+              <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto">
+                <code>{installationCode}</code>
+              </pre>
+            </section>
+
+            <section id="basic-usage" class="mt-8">
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">基本用法</h2>
+              <p class="text-gray-600 mb-4">
+                启用日志记录功能并创建你的第一个日志记录方法：
+              </p>
+              <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto">
+                <code>{basicUsageCode}</code>
+              </pre>
+            </section>
+
+            <section id="operator-specification" class="mt-8">
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">指定操作人</h2>
+              <p class="text-gray-600 mb-4">
+                有两种方式来指定谁执行了操作：
+              </p>
+              <h3 class="text-xl font-semibold text-gray-900 mt-4">1. 手动指定</h3>
+              <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mt-2">
+                <code>{operatorCode}</code>
+              </pre>
+              
+              <h3 class="text-xl font-semibold text-gray-900 mt-4">2. 自动解析操作人</h3>
+              <p class="text-gray-600 mb-4">
+                实现 IOperatorGetService 接口来自动解析当前用户：
+              </p>
+              <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mt-2">
+                <code>{operatorServiceCode}</code>
+              </pre>
+            </section>
+
+            <section id="log-text-customization" class="mt-8">
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">日志文本自定义</h2>
+              <p class="text-gray-600 mb-4">
+                你可以使用自定义函数来自定义日志文本：
+              </p>
+              <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mt-2">
+                <code>{customFunctionCode}</code>
+              </pre>
+              <p class="text-gray-600 mt-4">
+                通过创建实现 IParseFunction 的类来实现自定义函数：
+              </p>
+              <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mt-2">
+                <code>{parseFunctionCode}</code>
+              </pre>
+            </section>
+
+            <section id="conditional-expressions" class="mt-8">
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">使用条件表达式</h2>
+              <p class="text-gray-600 mb-4">
+                在日志记录中使用 SpEL 条件表达式：
+              </p>
+              <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mt-2">
+                <code>{conditionalCode}</code>
+              </pre>
+            </section>
+
+            <section id="context-variables" class="mt-8">
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">使用上下文变量</h2>
+              <p class="text-gray-600 mb-4">
+                在方法执行期间添加变量到日志上下文：
+              </p>
+              <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mt-2">
+                <code>{contextVariablesCode}</code>
+              </pre>
+            </section>
+
+            <section id="function-context" class="mt-8">
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">在函数中使用上下文</h2>
+              <p class="text-gray-600 mb-4">
+                在自定义函数中访问上下文变量：
+              </p>
+              <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mt-2">
+                <code>{diffListFunctionCode}</code>
+              </pre>
+            </section>
+
+            <section id="conditional-logging" class="mt-8">
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">条件日志记录</h2>
+              <p class="text-gray-600 mb-4">
+                使用条件来控制何时记录日志：
+              </p>
+              <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mt-2">
+                <code>{conditionalLoggingCode}</code>
+              </pre>
+            </section>
+
+            <section id="object-diff" class="mt-8">
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">对象差异功能</h2>
+              <p class="text-gray-600 mb-4">
+                使用差异功能跟踪对象字段的变化：
+              </p>
+              <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mt-2">
+                <code>{objectDiffCode}</code>
+              </pre>
+            </section>
+
+            <section id="performance-monitoring" class="mt-8">
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">性能监控</h2>
+              <p class="text-gray-600 mb-4">
+                实现 ILogRecordPerformanceMonitor 接口来监控日志性能：
+              </p>
+              <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mt-2">
+                <code>{performanceMonitoringCode}</code>
+              </pre>
+            </section>
+
+            <section id="success-conditions" class="mt-8">
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">成功条件</h2>
+              <p class="text-gray-600 mb-4">
+                指定记录成功消息的条件：
+              </p>
+              <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mt-2">
+                <code>{successConditionsCode}</code>
+              </pre>
+            </section>
+
+            <section id="transaction-support" class="mt-8">
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">事务支持</h2>
+              <p class="text-gray-600 mb-4">
+                配置日志记录参与业务事务：
+              </p>
+              <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto">
+                <code>{transactionCode}</code>
+              </pre>
+            </section>
+
+            <section id="multiple-logs" class="mt-8">
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">多日志记录</h2>
+              <p class="text-gray-600 mb-4">
+                为单个方法记录多条日志：
+              </p>
+              <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mt-2">
+                <code>{multipleLogsCode}</code>
+              </pre>
+            </section>
+
+            <section id="object-comparison" class="mt-8">
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">对象比较</h2>
+              <p class="text-gray-600 mb-4">
+                使用 equals 和 toString 方法自定义对象比较：
+              </p>
+              <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mt-2">
+                <code>{objectComparisonCode}</code>
+              </pre>
+              <p class="text-gray-600 mt-4">
+                此配置为指定的类启用自定义比较，提高差异日志的可读性。
+              </p>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

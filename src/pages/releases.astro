@@ -1,0 +1,113 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="发布说明 - MZT Biz Log">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-4xl font-bold text-gray-900 mb-8">发布说明</h1>
+
+    <div class="space-y-8">
+      <!-- 最新版本 -->
+      <div class="bg-white rounded-lg shadow-sm p-8">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-2xl font-bold text-gray-900">v3.0.7-SNAPSHOT</h2>
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+            最新版本
+          </span>
+        </div>
+        <div class="mt-4 prose max-w-none">
+          <ul class="list-disc pl-5 text-gray-600">
+            <li>修复diff内容相同在某些情况下，依然记录日志的问题 #153</li>
+            <li>其他优化</li>
+            <li>单测优化</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- v3.0.6 -->
+      <div class="bg-white rounded-lg shadow-sm p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">v3.0.6</h2>
+        <div class="mt-4 prose max-w-none">
+          <ul class="list-disc pl-5 text-gray-600">
+            <li>提供global变量清除方法，用户需要根据实际自己清除global变量</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- v3.0.5 -->
+      <div class="bg-white rounded-lg shadow-sm p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">v3.0.5</h2>
+        <div class="mt-4 prose max-w-none">
+          <ul class="list-disc pl-5 text-gray-600">
+            <li>修复参数全局传递未获取到值</li>
+            <li>diffLog未生效</li>
+            <li>优化文案比对格式,支持重载 toString 和 equals 方法</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- v3.0.4 -->
+      <div class="bg-white rounded-lg shadow-sm p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">v3.0.4</h2>
+        <div class="mt-4 prose max-w-none">
+          <ul class="list-disc pl-5 text-gray-600">
+            <li>修复fix:修复LocalDateTime diff (#111, #114)</li>
+            <li>固定文案判断错误</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- v3.0.3 -->
+      <div class="bg-white rounded-lg shadow-sm p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">v3.0.3</h2>
+        <div class="mt-4 prose max-w-none">
+          <ul class="list-disc pl-5 text-gray-600">
+            <li>修复日志打印两次的问题</li>
+            <li>方法支持多注解(#98)</li>
+            <li>相同对象diff不记录日志 详细使用方式见 IOrderServiceTest</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Earlier Versions -->
+      <div class="bg-white rounded-lg shadow-sm p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">Earlier Versions</h2>
+        <div class="mt-4 prose max-w-none">
+          <div class="space-y-4">
+            <div>
+              <h3 class="text-lg font-semibold">v3.0.2</h3>
+              <ul class="list-disc pl-5 text-gray-600">
+                <li>修复 DIffLogIgnore注解在集合类型上失效问题</li>
+                <li>支持跨方法的全局变量</li>
+                <li>支持日志记录异常与业务逻辑一起回滚的逻辑，默认日志记录不影响业务逻辑</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold">v3.0.1</h3>
+              <ul class="list-disc pl-5 text-gray-600">
+                <li>diff 功能支持了数组(#75)</li>
+                <li>增加判断是否成功的条件表达式</li>
+                <li>增加 @DiffLogAllFields、@DIffLogIgnore 注解支持</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold">v3.0.0</h3>
+              <ul class="list-disc pl-5 text-gray-600">
+                <li>暂时删除了list实现优化中</li>
+                <li>增加了xml的方式</li>
+                <li>增加了性能监控接口</li>
+                <li>修复了function 内的 service 需要添加 @Lazy 的问题</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 技术交流群信息 -->
+    <div class="mt-12 p-8 bg-white rounded-lg shadow-sm">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">技术交流群</h2>
+      <p class="text-gray-600">欢迎大家加入技术交流群，一起探讨技术！微信二维码请见文章末尾。</p>
+    </div>
+  </main>
+</Layout>

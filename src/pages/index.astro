@@ -1,0 +1,89 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="MZT Biz Log - Springboot 注解通用操作日志组件">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- 作者介绍 -->
+    <section class="py-12">
+      <div class="bg-white rounded-lg shadow-sm p-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">关于作者</h2>
+        <div class="flex items-start space-x-6">
+          <img src="/wechat-me.jpeg" alt="作者" class="w-24 h-24 rounded-full" />
+          <div>
+            <h3 class="text-xl font-semibold text-gray-900">Mouzt</h3>
+            <p class="text-gray-600 mt-2">
+              邮箱: mztsmile@163.com
+            </p>
+            <div class="mt-4">
+              <p class="text-gray-600">加入我们的微信群一起讨论技术，共同进步！(*❦ω❦)</p>
+              <img src="/wechat-group.jpg" alt="微信群" class="mt-2 max-w-xs" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 项目概述 -->
+    <section class="py-12">
+      <div class="bg-white rounded-lg shadow-sm p-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">项目概述</h2>
+        <p class="text-gray-600 mb-8">
+          MZT Biz Log 是一个基于注解的 Spring Boot 通用操作日志组件，支持变量和自定义函数。
+          在 GitHub 上已获得超过 2.1k 星标和 492 次分叉，成为 Spring Boot 应用程序中操作日志记录的热门选择。
+        </p>
+        
+        <div class="prose max-w-none">
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">核心目标</h3>
+          <p class="text-gray-600">
+            该组件解决了基本的日志记录问题：谁在什么时候对什么进行了什么操作？
+          </p>
+        </div>
+        
+        <div class="mt-8">
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">GitHub Stars 趋势</h3>
+          <a href="https://github.com/mouzt/mzt-biz-log" target="_blank" rel="noopener noreferrer">
+            <img 
+              src="https://api.star-history.com/svg?repos=mouzt/mzt-biz-log&type=Date" 
+              alt="Star History Chart" 
+              class="w-full max-w-2xl mx-auto"
+            />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 主要特性 -->
+    <section class="py-12">
+      <div class="bg-white rounded-lg shadow-sm p-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">主要特性</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-3">基于注解</h3>
+            <p class="text-gray-600">
+              简单而强大的基于注解的日志记录，支持变量和SpEL表达式。
+            </p>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-3">成功/失败日志</h3>
+            <p class="text-gray-600">
+              基于方法执行成功或失败的条件日志记录，支持自定义条件。
+            </p>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-3">事务支持</h3>
+            <p class="text-gray-600">
+              可选的业务逻辑事务集成，确保日志记录的一致性。
+            </p>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-3">可扩展框架</h3>
+            <p class="text-gray-600">
+              支持自定义操作者信息、存储实现和解析函数。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
