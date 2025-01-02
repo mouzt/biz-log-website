@@ -6,22 +6,22 @@ import Layout from '../layouts/Layout.astro';
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- 项目概述 -->
     <section class="py-12">
-      <div class="bg-white rounded-lg shadow-sm p-8">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">项目概述</h2>
-        <p class="text-gray-600 mb-8">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">项目概述</h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-8">
           MZT Biz Log 是一个基于注解的 Spring Boot 通用操作日志组件，支持变量和自定义函数。
           在 GitHub 上已获得超过 2.1k 星标和 492 次分叉，成为 Spring Boot 应用程序中操作日志记录的热门选择。
         </p>
         
         <div class="prose max-w-none">
-          <h3 class="text-xl font-semibold text-gray-900 mb-4">核心目标</h3>
-          <p class="text-gray-600">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">核心目标</h3>
+          <p class="text-gray-600 dark:text-gray-300">
             该组件解决了基本的日志记录问题：谁在什么时候对什么进行了什么操作？
           </p>
         </div>
         
         <div class="mt-8">
-          <h3 class="text-xl font-semibold text-gray-900 mb-4">GitHub Stars 趋势</h3>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">GitHub Stars 趋势</h3>
           <a href="https://github.com/mouzt/mzt-biz-log" target="_blank" rel="noopener noreferrer">
             <img 
               src="https://api.star-history.com/svg?repos=mouzt/mzt-biz-log&type=Date" 
@@ -35,30 +35,30 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- 主要特性 -->
     <section class="py-12">
-      <div class="bg-white rounded-lg shadow-sm p-8">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">主要特性</h2>
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">主要特性</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div class="border border-gray-200 rounded-lg p-6">
-            <h3 class="text-xl font-semibold text-gray-900 mb-3">基于注解</h3>
-            <p class="text-gray-600">
+          <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">基于注解</h3>
+            <p class="text-gray-600 dark:text-gray-300">
               简单而强大的基于注解的日志记录，支持变量和SpEL表达式。
             </p>
           </div>
-          <div class="border border-gray-200 rounded-lg p-6">
-            <h3 class="text-xl font-semibold text-gray-900 mb-3">成功/失败日志</h3>
-            <p class="text-gray-600">
+          <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">成功/失败日志</h3>
+            <p class="text-gray-600 dark:text-gray-300">
               基于方法执行成功或失败的条件日志记录，支持自定义条件。
             </p>
           </div>
-          <div class="border border-gray-200 rounded-lg p-6">
-            <h3 class="text-xl font-semibold text-gray-900 mb-3">事务支持</h3>
-            <p class="text-gray-600">
+          <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">事务支持</h3>
+            <p class="text-gray-600 dark:text-gray-300">
               可选的业务逻辑事务集成，确保日志记录的一致性。
             </p>
           </div>
-          <div class="border border-gray-200 rounded-lg p-6">
-            <h3 class="text-xl font-semibold text-gray-900 mb-3">可扩展框架</h3>
-            <p class="text-gray-600">
+          <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">可扩展框架</h3>
+            <p class="text-gray-600 dark:text-gray-300">
               支持自定义操作者信息、存储实现和解析函数。
             </p>
           </div>
@@ -68,22 +68,22 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- 作者介绍 -->
     <section class="py-12">
-      <div class="bg-white rounded-lg shadow-sm p-8">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">关于作者</h2>
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">关于作者</h2>
         <div class="flex items-start space-x-6">
           <div class="transform rotate-[10deg]">
             <img src="/avatar.jpg" alt="作者" class="w-28 h-40 rounded-[60%] object-cover shadow-lg" />
           </div>
           <div>
-            <h3 class="text-xl font-semibold text-gray-900">Mouzt</h3>
-            <p class="text-gray-600 mt-2">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Mouzt</h3>
+            <p class="text-gray-600 dark:text-gray-300 mt-2">
               邮箱: mztsmile@gmail.com
             </p>
             <a 
               href="https://github.com/mouzt" 
               target="_blank" 
               rel="noopener noreferrer"
-              class="inline-flex items-center mt-2 text-blue-600 hover:text-blue-800"
+              class="inline-flex items-center mt-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
             >
               <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
