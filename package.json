@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
+    "prebuild": "node scripts/update-star-history.js",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "update-star-history": "node scripts/update-star-history.js"
   },
   "dependencies": {
     "astro": "^4.15.3",

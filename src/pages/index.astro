@@ -22,12 +22,14 @@ import Layout from '../layouts/Layout.astro';
         
         <div class="mt-8">
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">GitHub Stars 趋势</h3>
-          <a href="https://github.com/mouzt/mzt-biz-log" target="_blank" rel="noopener noreferrer">
-            <img 
-              src="https://api.star-history.com/svg?repos=mouzt/mzt-biz-log&type=Date" 
-              alt="Star History Chart" 
-              class="w-full max-w-2xl mx-auto"
-            />
+          <a href="https://github.com/mouzt/mzt-biz-log" target="_blank" rel="noopener noreferrer" class="block w-full">
+            <div class="bg-transparent dark:bg-gray-700/50 rounded-lg p-4 w-full">
+              <img 
+                src="/cache/star-history.svg" 
+                alt="Star History Chart" 
+                class="w-full object-contain"
+              />
+            </div>
           </a>
         </div>
       </div>
@@ -38,30 +40,50 @@ import Layout from '../layouts/Layout.astro';
       <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8">
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">主要特性</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">基于注解</h3>
+          <a href="/docs" class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 transition duration-300 ease-in-out hover:shadow-lg hover:border-blue-500 dark:hover:border-blue-400 cursor-pointer group">
+            <div class="flex items-center gap-3 mb-3">
+              <svg class="w-6 h-6 text-blue-500 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+              </svg>
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-blue-500 dark:group-hover:text-blue-400">基于注解</h3>
+            </div>
             <p class="text-gray-600 dark:text-gray-300">
               简单而强大的基于注解的日志记录，支持变量和SpEL表达式。
             </p>
-          </div>
-          <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">成功/失败日志</h3>
+          </a>
+          <a href="/docs" class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 transition duration-300 ease-in-out hover:shadow-lg hover:border-green-500 dark:hover:border-green-400 cursor-pointer group">
+            <div class="flex items-center gap-3 mb-3">
+              <svg class="w-6 h-6 text-green-500 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-green-500 dark:group-hover:text-green-400">成功/失败日志</h3>
+            </div>
             <p class="text-gray-600 dark:text-gray-300">
               基于方法执行成功或失败的条件日志记录，支持自定义条件。
             </p>
-          </div>
-          <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">事务支持</h3>
+          </a>
+          <a href="/docs" class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 transition duration-300 ease-in-out hover:shadow-lg hover:border-purple-500 dark:hover:border-purple-400 cursor-pointer group">
+            <div class="flex items-center gap-3 mb-3">
+              <svg class="w-6 h-6 text-purple-500 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+              </svg>
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-purple-500 dark:group-hover:text-purple-400">支持对象diff</h3>
+            </div>
             <p class="text-gray-600 dark:text-gray-300">
               可选的业务逻辑事务集成，确保日志记录的一致性。
             </p>
-          </div>
-          <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">可扩展框架</h3>
+          </a>
+          <a href="/docs" class="border border-gray-200 dark:border-gray-700 rounded-lg p-6 transition duration-300 ease-in-out hover:shadow-lg hover:border-orange-500 dark:hover:border-orange-400 cursor-pointer group">
+            <div class="flex items-center gap-3 mb-3">
+              <svg class="w-6 h-6 text-orange-500 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/>
+              </svg>
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-orange-500 dark:group-hover:text-orange-400">可扩展框架</h3>
+            </div>
             <p class="text-gray-600 dark:text-gray-300">
               支持自定义操作者信息、存储实现和解析函数。
             </p>
-          </div>
+          </a>
         </div>
       </div>
     </section>
